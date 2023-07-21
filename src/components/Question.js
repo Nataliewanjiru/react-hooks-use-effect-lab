@@ -4,20 +4,21 @@ function Question({ question, onAnswered }) {
   const [timeRemaining, setTimeRemaining] = useState(10);
 
   // add useEffect code
-useEffect(()=>{
-  let intervalId = setTimeout(()=>{
-    if(timeRemaining >0){
-       setTimeRemaining(timeRemaining-1)
-    }else{
-      setTimeRemaining(10)
-      onAnswered(false)
-    } 
-  },1000)
-
-  return(
-    ()=>cleanup
-  )
-},[timeRemaining])
+  useEffect(() => {
+    let intervalId = setTimeout(() => {
+      if (timeRemaining >=1) {
+        setTimeRemaining((prevTime) => prevTime - 1);
+      } else {
+        setTimeRemaining(10);
+        onAnswered(false);
+      }
+    }, 1000);
+  
+    return () => {
+      clearTimeout(intervalId); 
+    };
+  }, [timeRemaining, onAnswered]);
+  
 
 
   function handleAnswer(isCorrect) {
